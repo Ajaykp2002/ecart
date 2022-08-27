@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+         {{prod.description|truncatewords:155}}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{prod.name}}-PKD Foodies
+    {% endif %}
+{% endblock %}
+{% block content %}
+<div class="row my_prod_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 'ecartapp:allprocat' %}">Home</a> | <a href="{{prod.category.get_url}}">{{prod.category}}</a>|{{prod.name}}</p>
+    </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12-col-md-12 col-lg-6 text-center">
+        <div style="min-width:18rem;">
+            <img src="{{prod.image.url}}"  alt="{{prod.name}}">
+        </div>
+    </div>
+            <div class="col-12 col-sm-12 col-sm-12 col-lg-6">
+                <div>
+            <h1 class="my_prod_title">{{prod.name}}</h1>
+            <p>${{prod.price}}</p>
+            <p class="my_title">product Description</p>
+            <p class="text-justify my_prod_text">{{prod.description}}</p>
+            {% if prod.stock <= 0 %}
+                <p class="text-justify my_prod_text"><b>Out of Stock</b></p>
+            {% else %}
+            <a class="btn btn-secondary" href="{% url 'cart:add_cart' prod.id %}">Add To Cart</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+    </div>
+{% endblock %}
